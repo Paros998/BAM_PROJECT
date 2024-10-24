@@ -1,0 +1,6 @@
+.idea/inspectionProfiles/
+.idea/sonarlint/
+.idea/shelf/
+.idea/*.xml
+*.iml
+*/target
