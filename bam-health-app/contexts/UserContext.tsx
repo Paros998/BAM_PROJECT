@@ -1,91 +1,101 @@
-import { Context, createContext, FC, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import {Context, createContext, FC, ReactNode, useCallback, useContext, useEffect, useMemo, useState} from 'react';
+import {useToast} from "native-base";
+import {jwtDecode} from 'jwt-decode';
 import Axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
 
-import { JwtUser } from '../../interfaces/JwtUser';
 import {UserContextInterface} from "@/interfaces/UserContextInterface";
 import {UserModel} from "@/interfaces/Api";
+import {JwtUser} from "@/interfaces/JwtUser";
+import {useNavigation} from '@react-navigation/native';
+import {getRawToken} from "@/utils/getRawToken";
+import {deleteToken} from "@/utils/deleteToken";
 
 const UserContext = createContext<any>(undefined);
 
 export const useCurrentUser = () => useContext(UserContext as Context<UserContextInterface>);
 
 interface ProviderProps {
-	children: ReactNode;
+    children: ReactNode;
 }
 
-const CurrentUserProvider: FC<ProviderProps> = ({ children }) => {
-	const navigate = useNavigate();
-	const [currentUser, setCurrentUser] = useState<UserModel>();
-	const [isPending, setIsPending] = useState(false);
+const CurrentUserProvider: FC<ProviderProps> = ({children}) => {
+    const navigation = useNavigation();
+    const [currentUser, setCurrentUser] = useState<UserModel>();
+    const [isPending, setIsPending] = useState(false);
+    const toast = useToast();
 
-	const onClearUser = async () => {
-		setCurrentUser(undefined);
+    const onClearUser = async () => {
+        setCurrentUser(undefined);
 
-		await onLogOut();
-	};
+        await onLogOut();
+    };
 
-	const fetchUser = useCallback(async () => {
-		setIsPending(true);
+    const fetchUser = useCallback(async () => {
+        setIsPending(true);
 
-		const token = localStorage.getItem('JWT_USER_TOKEN');
+        const token = await getRawToken();
 
-		if (!token) {
-			setIsPending(false);
-			setCurrentUser(undefined);
-			return;
-		}
+        if (!token) {
+            setIsPending(false);
+            setCurrentUser(undefined);
+            return;
+        }
 
-		if (Axios.defaults.headers.common.Authorization === undefined) {
-			Axios.defaults.headers.common.Authorization = token;
-		}
+        if (Axios.defaults.headers.common.Authorization === undefined) {
+            Axios.defaults.headers.common.Authorization = token;
+        }
 
-		const { userId }: JwtUser = jwtDecode(token);
+        const {userId}: JwtUser = jwtDecode(token);
 
-		try {
-			const { data } = await Axios.get<UserModel>(`/users/find/${userId}`);
-			setCurrentUser(data);
-		} catch (e: any) {
-			toast.error(e);
-		} finally {
-			setIsPending(false);
-		}
-	}, []);
+        try {
+            const {data} = await Axios.get<UserModel>(`/users/find/${userId}`);
+            setCurrentUser(data);
+        } catch (e: any) {
+            toast.show({
+                title: e,
+                variant: 'error'
+            });
+        } finally {
+            setIsPending(false);
+        }
+    }, []);
 
-	useEffect(() => {
-		fetchUser().catch();
-	}, [fetchUser]);
+    useEffect(() => {
+        fetchUser().catch();
+    }, [fetchUser]);
 
-	const onLogOut = async () => {
-		localStorage.removeItem('JWT_USER_TOKEN');
+    const onLogOut = async () => {
+        await deleteToken();
 
-		if (currentUser) {
-			toast.info('We hope to see you again soon');
-		}
+        if (currentUser) {
+            toast.show({
+                title: 'We hope to see you again soon',
+                variant: 'info'
+            });
+        }
 
-		setCurrentUser(undefined);
+        setCurrentUser(undefined);
 
-		delete Axios.defaults.headers.common['Authorization'];
+        delete Axios.defaults.headers.common['Authorization'];
 
-		navigate('/');
+        navigation.navigate('/' as never);
 
-		await fetchUser();
-	};
+        await fetchUser();
+    };
 
-	// TODO useMemo
-	const contextData = {
-		currentUser,
-		fetchUser,
-		isPending,
-		setIsPending,
-		onLogOut,
-		onClearUser,
-	};
+    const contextData = useMemo(() => {
+        return {
+            currentUser,
+            fetchUser,
+            isPending,
+            setIsPending,
+            onLogOut,
+            onClearUser
+        }
+    }, [currentUser, isPending]);
 
-	// eslint-disable-next-line react/react-in-jsx-scope
-	return <UserContext.Provider value={contextData}>{children}</UserContext.Provider>;
+    // eslint-disable-next-line react/react-in-jsx-scope
+    return <UserContext.Provider value={contextData}>{children}</UserContext.Provider>;
 };
 
 export default CurrentUserProvider;
