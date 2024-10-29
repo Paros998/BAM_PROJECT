@@ -52,7 +52,7 @@ const CurrentUserProvider: FC<ProviderProps> = ({children}) => {
             setCurrentUser(data);
         } catch (e: any) {
             toast.show({
-                title: e,
+                title: e.message,
                 variant: 'error'
             });
         } finally {
