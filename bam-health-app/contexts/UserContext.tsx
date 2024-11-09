@@ -58,6 +58,11 @@ const CurrentUserProvider: FC<ProviderProps> = ({ children }) => {
 
     const { userId }: JwtUser = jwtDecode(token);
 
+    if (!userId) {
+      setIsPending(false);
+      return;
+    }
+
     try {
       const { data } = await Axios.get<UserModel>(`/users/find/${userId}`);
       setCurrentUser(data);

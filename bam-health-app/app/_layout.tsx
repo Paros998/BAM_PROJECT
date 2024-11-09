@@ -14,10 +14,12 @@ import Views from "@/app/Views";
 import { NativeBaseProvider } from "native-base";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LogBox } from "react-native";
+import { useMockServer } from "@/hooks/useMirage";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 initAxios().catch();
+useMockServer();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
