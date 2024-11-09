@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC } from "react";
 import CenteredSpinner from "../CenteredSpinner/CenteredSpinner";
 import { ISpinnerProps, View } from "native-base";
 
@@ -8,11 +8,11 @@ interface ScreenPendingProps extends ISpinnerProps {
 
 const ScreenPending: FC<ScreenPendingProps> = ({ isPending, ...props }) => {
   return (
-    <View h='full'>
+    <View h="full">
       <CenteredSpinner
         isPending={isPending}
-        color='primary.500'
-        size='lg'
+        color="primary.500"
+        size="lg"
         {...props}
       />
     </View>

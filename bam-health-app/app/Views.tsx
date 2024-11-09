@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import ScreenPending from "../components/ScreenPending/ScreenPending";
-import {useCurrentUser} from "@/contexts/UserContext";
+import { useCurrentUser } from "@/contexts/UserContext";
 import AuthorizedViews from "@/app/AuthorizedViews";
 import UnauthorizedViews from "@/app/UnauthorizedViews";
 
@@ -12,10 +12,10 @@ const Views = () => {
   }
 
   if (currentUser) {
-    return <AuthorizedViews/>;
+    return <AuthorizedViews />;
   }
 
-  return <UnauthorizedViews/>;
+  return <UnauthorizedViews />;
 };
 
 export default Views;
