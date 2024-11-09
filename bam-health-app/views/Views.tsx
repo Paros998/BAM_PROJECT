@@ -1,8 +1,8 @@
 import React from "react";
 import ScreenPending from "../components/ScreenPending/ScreenPending";
 import { useCurrentUser } from "@/contexts/UserContext";
-import AuthorizedViews from "@/app/AuthorizedViews";
-import UnauthorizedViews from "@/app/UnauthorizedViews";
+import AuthorizedViews from "@/views/AuthorizedViews";
+import UnauthorizedViews from "@/views/UnauthorizedViews";
 
 const Views = () => {
   const { currentUser, isPending } = useCurrentUser();

@@ -1,28 +1,21 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { initAxios } from "@/utils/initAxios";
 import CurrentUserProvider from "@/contexts/UserContext";
-import Views from "@/app/Views";
 import { NativeBaseProvider } from "native-base";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { LogBox } from "react-native";
-import { useMockServer } from "@/hooks/useMirage";
+import { overriddenTheme } from "@/constants/overriddenTheme";
+import { useMockServer } from "@/utils/initMirage";
+import Views from "@/views/Views";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
+// Prevent the splash screen from auto-hiding before asset loading is  complete.
 SplashScreen.preventAutoHideAsync();
 initAxios().catch();
 useMockServer();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
@@ -44,14 +37,10 @@ export default function RootLayout() {
   }
 
   return (
-    <NativeBaseProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <CurrentUserProvider>
-          <SafeAreaView>
-            <Views />
-          </SafeAreaView>
-        </CurrentUserProvider>
-      </ThemeProvider>
+    <NativeBaseProvider theme={overriddenTheme}>
+      <CurrentUserProvider>
+        <Views />
+      </CurrentUserProvider>
     </NativeBaseProvider>
   );
 }

@@ -8,10 +8,10 @@ interface ScreenPendingProps extends ISpinnerProps {
 
 const ScreenPending: FC<ScreenPendingProps> = ({ isPending, ...props }) => {
   return (
-    <View h="full">
+    <View h="full" backgroundColor={"dark.700"}>
       <CenteredSpinner
         isPending={isPending}
-        color="primary.500"
+        color="primary.300"
         size="lg"
         {...props}
       />
