@@ -71,6 +71,10 @@ const CurrentUserProvider: FC<ProviderProps> = ({ children }) => {
         title: e.message,
         variant: "error",
       });
+
+      if (e.status === 404) {
+        await deleteToken();
+      }
     } finally {
       setIsPending(false);
     }

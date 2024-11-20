@@ -40,8 +40,7 @@ const Login: FC = () => {
         const token = response.headers["authorization"];
 
         toast.show({
-          title: "👍 Sukces logowania",
-          variant: "success",
+          title: "👍 Login successful.",
         });
 
         axios.defaults.headers.common["Authorization"] = token;
@@ -50,8 +49,7 @@ const Login: FC = () => {
       }
     } catch (e: any) {
       toast.show({
-        title: "👎 Nie udało się zalogować",
-        variant: "error",
+        title: "👎 Couldn't log in.",
       });
     }
   };

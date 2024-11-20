@@ -7,13 +7,11 @@ import CurrentUserProvider from "@/contexts/UserContext";
 import { NativeBaseProvider } from "native-base";
 import { LogBox } from "react-native";
 import { overriddenTheme } from "@/constants/overriddenTheme";
-import { useMockServer } from "@/utils/initMirage";
 import Views from "@/views/Views";
 
 // Prevent the splash screen from auto-hiding before asset loading is  complete.
 SplashScreen.preventAutoHideAsync();
 initAxios().catch();
-useMockServer();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
