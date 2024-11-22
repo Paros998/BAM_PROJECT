@@ -29,8 +29,6 @@ const Login: FC = () => {
   const currentUser = useCurrentUser();
 
   const handleLogin = async (values: UserCredentials) => {
-    console.log(values);
-
     const loginParams = appendUrlSearchParams(values);
 
     try {
