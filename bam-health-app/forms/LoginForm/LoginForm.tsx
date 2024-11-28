@@ -1,11 +1,16 @@
 import React from "react";
-import { FormControl, Input, View, VStack } from "native-base";
+import {
+  FormControl,
+  Input,
+  View,
+  VStack,
+} from "@gluestack-ui/themed-native-base";
 import { useFormikContext } from "formik";
 import { UserCredentials } from "@/interfaces/Api";
 import SubmitButton from "@/components/SubmitButton/SubmitButton";
 
 const LoginForm = () => {
-  const { values, handleChange, handleBlur, handleSubmit } =
+  const { values, handleChange, handleBlur, errors } =
     useFormikContext<UserCredentials>();
 
   return (
@@ -21,25 +26,28 @@ const LoginForm = () => {
         justifyContent={"center"}
         space={4}
       >
-        <FormControl isRequired>
+        <FormControl isRequired isE>
           <FormControl.Label _text={{ fontSize: "xl" }}>
-            Użytkownik
+            Username
           </FormControl.Label>
           <Input
+            name="username"
             onChangeText={handleChange("username")}
             value={values.username}
             color="dark.800"
             backgroundColor="light.50"
             size="xl"
-            placeholder="Jan... "
+            placeholder="User... "
           />
+          <FormControl.ErrorMessage></FormControl.ErrorMessage>
         </FormControl>
 
         <FormControl mt={5} isRequired>
           <FormControl.Label _text={{ fontSize: "xl" }}>
-            Hasło
+            Password
           </FormControl.Label>
           <Input
+            name="password"
             onChangeText={handleChange("password")}
             value={values.password}
             onBlur={handleBlur("password")}
@@ -47,13 +55,13 @@ const LoginForm = () => {
             color="dark.800"
             backgroundColor="light.50"
             size="xl"
-            placeholder="Jan@123_#21..."
+            placeholder="Pass@123_#21..."
           />
         </FormControl>
       </VStack>
       <View w={"full"} alignItems={"center"}>
         <SubmitButton
-          title={"Zaloguj"}
+          title={"Log In"}
           mt={5}
           rounded="full"
           colorScheme={"indigo"}

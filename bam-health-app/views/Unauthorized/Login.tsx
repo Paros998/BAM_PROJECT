@@ -1,6 +1,6 @@
 import { UserCredentials } from "@/interfaces/Api";
 import { FC } from "react";
-import { Heading, useToast, View } from "native-base";
+import { Heading, useToast, View } from "@gluestack-ui/themed-native-base";
 import { useCurrentUser } from "@/contexts/UserContext";
 import axios from "axios";
 import { appendUrlSearchParams } from "@/utils/appendUrlSearchParams";
@@ -17,11 +17,11 @@ const formikValues: UserCredentials = {
 
 const validationSchema = Yup.object().shape({
   username: Yup.string()
-    .required("Login jest wymagany")
-    .min(6, "Login musi zawierać co najmniej 6 znaków"),
+    .required("Login is required")
+    .min(8, "Login has to contain at least 8 characters"),
   password: Yup.string()
-    .required("Hasło jest wymagane")
-    .min(6, "Hasło musi zawierać co najmniej 6 znaków"),
+    .required("Password is required")
+    .min(8, "Password has to contain at least 8 characters"),
 });
 
 const Login: FC = () => {
@@ -63,7 +63,7 @@ const Login: FC = () => {
       <Logo top="10" position={"absolute"} />
 
       <Heading mt={"1/6"} mb={1} color="light.50" fontSize={"2xl"}>
-        Logowanie
+        LogIn
       </Heading>
 
       <Formik<UserCredentials>

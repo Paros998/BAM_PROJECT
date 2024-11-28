@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 import { initAxios } from "@/utils/initAxios";
 import CurrentUserProvider from "@/contexts/UserContext";
-import { NativeBaseProvider } from "native-base";
+import { NativeBaseProvider } from "@gluestack-ui/themed-native-base";
 import { LogBox } from "react-native";
 import { overriddenTheme } from "@/constants/overriddenTheme";
 import Views from "@/views/Views";

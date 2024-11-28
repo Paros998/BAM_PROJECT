@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import CenteredSpinner from "../CenteredSpinner/CenteredSpinner";
-import { ISpinnerProps, View } from "native-base";
+import { View } from "@gluestack-ui/themed-native-base";
 
 interface ScreenPendingProps extends ISpinnerProps {
   isPending: boolean;

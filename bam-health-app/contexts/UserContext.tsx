@@ -9,7 +9,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { useToast } from "native-base";
+import { useToast } from "@gluestack-ui/themed-native-base";
 import { jwtDecode } from "jwt-decode";
 import Axios from "axios";
 

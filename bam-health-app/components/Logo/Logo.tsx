@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Box, HStack, IBoxProps, Image, Text } from "native-base";
+import { Box, HStack, Image, Text } from "@gluestack-ui/themed-native-base";
 
 const img = require("@/assets/images/favicon.png");
 

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
-import { Center, ICenterProps, ISpinnerProps, Spinner } from "native-base";
+import { Center, Spinner } from "@gluestack-ui/themed-native-base";
 
-interface CenteredSpinnerProps extends ISpinnerProps {
+interface CenteredSpinnerProps extends Spinner {
   isPending: unknown;
   wrapperProps?: ICenterProps;
 }
