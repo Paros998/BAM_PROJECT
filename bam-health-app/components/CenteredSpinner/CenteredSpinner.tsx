@@ -1,9 +1,10 @@
 import React, { FC } from "react";
 import { Center, Spinner } from "@gluestack-ui/themed-native-base";
+import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
-interface CenteredSpinnerProps extends Spinner {
+interface CenteredSpinnerProps extends ViewStyle {
   isPending: unknown;
-  wrapperProps?: ICenterProps;
+  wrapperProps?: ViewStyle;
 }
 
 const CenteredSpinner: FC<CenteredSpinnerProps> = ({

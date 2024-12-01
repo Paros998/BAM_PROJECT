@@ -1,8 +1,9 @@
 import React, { FC } from "react";
 import CenteredSpinner from "../CenteredSpinner/CenteredSpinner";
 import { View } from "@gluestack-ui/themed-native-base";
+import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
-interface ScreenPendingProps extends ISpinnerProps {
+interface ScreenPendingProps extends ViewStyle {
   isPending: boolean;
 }
 
@@ -11,8 +12,7 @@ const ScreenPending: FC<ScreenPendingProps> = ({ isPending, ...props }) => {
     <View h="full" backgroundColor={"dark.700"}>
       <CenteredSpinner
         isPending={isPending}
-        color="primary.300"
-        size="lg"
+        backgroundColor="primary.300"
         {...props}
       />
     </View>

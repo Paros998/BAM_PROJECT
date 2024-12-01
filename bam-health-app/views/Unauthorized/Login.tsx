@@ -60,7 +60,7 @@ const Login: FC = () => {
       alignItems="center"
       justifyContent="center"
     >
-      <Logo top="10" position={"absolute"} />
+      <Logo top="5%" position={"absolute"} />
 
       <Heading mt={"1/6"} mb={1} color="light.50" fontSize={"2xl"}>
         LogIn

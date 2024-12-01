@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   FormControl,
   Input,
@@ -13,6 +13,10 @@ const LoginForm = () => {
   const { values, handleChange, handleBlur, errors } =
     useFormikContext<UserCredentials>();
 
+  const isFormValid = useMemo<boolean>(() => {
+    return !errors.password && !errors.username;
+  }, [errors]);
+
   return (
     <View w={"full"} alignItems={"center"}>
       <VStack
@@ -26,7 +30,7 @@ const LoginForm = () => {
         justifyContent={"center"}
         space={4}
       >
-        <FormControl isRequired isE>
+        <FormControl isRequired isInvalid={errors?.username}>
           <FormControl.Label _text={{ fontSize: "xl" }}>
             Username
           </FormControl.Label>
@@ -39,10 +43,12 @@ const LoginForm = () => {
             size="xl"
             placeholder="User... "
           />
-          <FormControl.ErrorMessage></FormControl.ErrorMessage>
+          <FormControl.ErrorMessage>
+            {errors?.username}
+          </FormControl.ErrorMessage>
         </FormControl>
 
-        <FormControl mt={5} isRequired>
+        <FormControl mt={5} isRequired isInvalid={errors?.password}>
           <FormControl.Label _text={{ fontSize: "xl" }}>
             Password
           </FormControl.Label>
@@ -57,15 +63,19 @@ const LoginForm = () => {
             size="xl"
             placeholder="Pass@123_#21..."
           />
+          <FormControl.ErrorMessage>
+            {errors?.password}
+          </FormControl.ErrorMessage>
         </FormControl>
       </VStack>
       <View w={"full"} alignItems={"center"}>
         <SubmitButton
           title={"Log In"}
-          mt={5}
-          rounded="full"
-          colorScheme={"indigo"}
-          width="1/2"
+          marginTop={5}
+          borderCurve="circular"
+          colorScheme={!isFormValid ? "light" : "indigo"}
+          isFormValid={isFormValid}
+          width="50%"
         ></SubmitButton>
       </View>
     </View>

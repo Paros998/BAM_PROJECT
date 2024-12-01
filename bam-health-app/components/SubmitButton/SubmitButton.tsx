@@ -1,16 +1,24 @@
 import React, { FC } from "react";
 import { useFormikContext } from "formik";
-import { StyleProps } from "react-native-reanimated";
-import { IButtonProps } from "@gluestack-ui/button/lib/types";
 import { Button } from "@gluestack-ui/themed-native-base";
+import { StyleProps } from "react-native-reanimated/src/reanimated2/commonTypes";
 
-type SubmitButtonProps = IButtonProps & StyleProps & { title: string };
+type SubmitButtonProps = StyleProps & { title: string; isFormValid: boolean };
 
-const SubmitButton: FC<SubmitButtonProps> = ({ title, ...props }) => {
+const SubmitButton: FC<SubmitButtonProps> = ({
+  title,
+  isFormValid,
+  ...props
+}) => {
   const { isSubmitting, handleSubmit } = useFormikContext();
 
   return (
-    <Button loading={isSubmitting} onPress={handleSubmit} {...props}>
+    <Button
+      loading={isSubmitting}
+      disabled={!isFormValid}
+      onPress={handleSubmit}
+      {...props}
+    >
       {title}
       {/*{isSubmitting && <Spinner size="sm" mr={2} />}*/}
     </Button>

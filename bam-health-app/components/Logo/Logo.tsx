@@ -1,9 +1,10 @@
 import React, { FC } from "react";
 import { Box, HStack, Image, Text } from "@gluestack-ui/themed-native-base";
+import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
 const img = require("@/assets/images/favicon.png");
 
-const Logo: FC<IBoxProps> = (props) => {
+const Logo: FC<ViewStyle> = (props) => {
   return (
     <Box {...props}>
       <HStack alignItems={"center"}>
