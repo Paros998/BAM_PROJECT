@@ -3,7 +3,6 @@ import { FC } from "react";
 import { Heading, useToast, View } from "@gluestack-ui/themed-native-base";
 import { useCurrentUser } from "@/contexts/UserContext";
 import axios from "axios";
-import { appendUrlSearchParams } from "@/utils/appendUrlSearchParams";
 import { putToken } from "@/utils/putToken";
 import { Formik } from "formik";
 import Logo from "@/components/Logo/Logo";
@@ -29,10 +28,8 @@ const Login: FC = () => {
   const currentUser = useCurrentUser();
 
   const handleLogin = async (values: UserCredentials) => {
-    const loginParams = appendUrlSearchParams(values);
-
     try {
-      const response = await axios.post(`/auth/login`, loginParams);
+      const response = await axios.post(`/auth/login`, values);
 
       if (response.status === 200) {
         const token = response.headers["authorization"];

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { useFormikContext } from "formik";
 import { Button } from "@gluestack-ui/themed-native-base";
-import { StyleProps } from "react-native-reanimated/src/reanimated2/commonTypes";
+import { StyleProps } from "react-native-reanimated";
 
 type SubmitButtonProps = StyleProps & { title: string; isFormValid: boolean };
 

@@ -8,6 +8,7 @@ import { NativeBaseProvider } from "@gluestack-ui/themed-native-base";
 import { LogBox } from "react-native";
 import { overriddenTheme } from "@/constants/overriddenTheme";
 import Views from "@/views/Views";
+import { NavigationContainer } from "@react-navigation/native";
 
 // Prevent the splash screen from auto-hiding before asset loading is  complete.
 SplashScreen.preventAutoHideAsync();
@@ -35,10 +36,12 @@ export default function RootLayout() {
   }
 
   return (
-    <NativeBaseProvider theme={overriddenTheme}>
-      <CurrentUserProvider>
-        <Views />
-      </CurrentUserProvider>
-    </NativeBaseProvider>
+    <NavigationContainer>
+      <NativeBaseProvider theme={overriddenTheme}>
+        <CurrentUserProvider>
+          <Views />
+        </CurrentUserProvider>
+      </NativeBaseProvider>
+    </NavigationContainer>
   );
 }

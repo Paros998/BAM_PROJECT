@@ -10,7 +10,7 @@ const UnauthorizedViews = () => {
     <NavigationContainer independent={true}>
       <Stack.Navigator
         initialRouteName="Login"
-        screenOptions={{ headerShown: false }}
+        screenOptions={{ headerShown: true }}
       >
         <Stack.Screen name="Login" component={Login} />
       </Stack.Navigator>
