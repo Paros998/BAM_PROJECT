@@ -64,7 +64,7 @@ const CurrentUserProvider: FC<ProviderProps> = ({ children }) => {
     }
 
     try {
-      const { data } = await Axios.get<UserModel>(`/users/find/${userId}`);
+      const { data } = await Axios.get<UserModel>(`/users/${userId}`);
       setCurrentUser(data);
     } catch (e: any) {
       toast.show({

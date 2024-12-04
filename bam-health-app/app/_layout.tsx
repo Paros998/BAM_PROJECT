@@ -2,7 +2,6 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
-import { initAxios } from "@/utils/initAxios";
 import CurrentUserProvider from "@/contexts/UserContext";
 import { NativeBaseProvider } from "@gluestack-ui/themed-native-base";
 import { LogBox } from "react-native";
@@ -12,7 +11,6 @@ import { NavigationContainer } from "@react-navigation/native";
 
 // Prevent the splash screen from auto-hiding before asset loading is  complete.
 SplashScreen.preventAutoHideAsync();
-initAxios().catch();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
