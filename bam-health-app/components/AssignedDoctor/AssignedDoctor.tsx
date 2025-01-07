@@ -30,9 +30,7 @@ const AssignedDoctor: FC<AssignedDoctorProps> = ({ patientId, ...props }) => {
         {...props}
       >
         <VStack alignItems={"center"} justifyContent={"space-around"}>
-          <Heading color="dark.800" fontSize={"1xl"}>
-            No doctor is currently assigned.
-          </Heading>
+          <Heading color="dark.800">No doctor is currently assigned.</Heading>
 
           <Button mt={3} colorScheme={"indigo"}>
             Find one
@@ -54,12 +52,12 @@ const AssignedDoctor: FC<AssignedDoctorProps> = ({ patientId, ...props }) => {
       {...props}
     >
       <VStack alignItems={"center"} justifyContent={"space-around"}>
-        <Heading mb={1} color="dark.800" fontSize={"1xl"}>
+        <Heading mb={1} color="dark.800">
           Assigned doctor is {fullName} who specializes in {specialization},{" "}
           {age} years old.
         </Heading>
 
-        <Heading mb={1} color="dark.800" fontSize={"1xl"}>
+        <Heading mb={1} color="dark.800">
           Total experience: {yearsOfExperience}
         </Heading>
 

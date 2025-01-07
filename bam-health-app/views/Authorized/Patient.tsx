@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 import Logo from "@/components/Logo/Logo";
-import { View } from "@gluestack-ui/themed-native-base";
 import { useCurrentUser } from "@/contexts/UserContext";
 import CenteredSpinner from "@/components/CenteredSpinner/CenteredSpinner";
 import AssignedDoctor from "@/components/AssignedDoctor/AssignedDoctor";
 import Header from "@/components/Header/Header";
 import RecentTests from "@/components/RecentTests/RecentTests";
+import { View } from "@gluestack-ui/themed-native-base";
 
 const Patient: FC = () => {
   const { currentUser, isPending, onClearUser } = useCurrentUser();
@@ -22,14 +22,14 @@ const Patient: FC = () => {
   return (
     <View
       height={"full"}
-      pt={"45%"}
-      pb={"20%"}
+      pt={2}
       w="full"
       backgroundColor="dark.800"
       alignItems="center"
       justifyContent="flex-start"
     >
-      <Logo top="5%" position={"fixed"} />
+      <Logo marginBottom={10} />
+
       <Header username={currentUser.username} role={currentUser.role} />
 
       <AssignedDoctor

@@ -7,6 +7,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { useToast } from "@gluestack-ui/themed-native-base";
@@ -16,9 +17,15 @@ import Axios from "axios";
 import { UserContextInterface } from "@/interfaces/UserContextInterface";
 import { UserModel } from "@/interfaces/Api";
 import { JwtUser } from "@/interfaces/JwtUser";
-import { useNavigation } from "@react-navigation/native";
+import {
+  createNavigationContainerRef,
+  useNavigation,
+} from "@react-navigation/native";
 import { getRawToken } from "@/utils/getRawToken";
+import * as LocalAuthentication from "expo-local-authentication";
+
 import { deleteToken } from "@/utils/deleteToken";
+import { AppState } from "react-native";
 
 const UserContext = createContext<any>(undefined);
 
@@ -29,15 +36,21 @@ interface ProviderProps {
   children: ReactNode;
 }
 
+const navigationRef = createNavigationContainerRef();
+
 const CurrentUserProvider: FC<ProviderProps> = ({ children }) => {
+  const appState = useRef(AppState.currentState);
   const navigation = useNavigation();
+  const toast = useToast();
+
   const [currentUser, setCurrentUser] = useState<UserModel>();
   const [isPending, setIsPending] = useState(false);
-  const toast = useToast();
+  const [needsReAuthentication, setNeedsReAuthentication] = useState(false);
+  const [isAuthenticationSupported, setIsAuthenticationSupported] =
+    useState(false);
 
   const onClearUser = async () => {
     setCurrentUser(undefined);
-
     await onLogOut();
   };
 
@@ -81,8 +94,34 @@ const CurrentUserProvider: FC<ProviderProps> = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    const state = AppState.addEventListener("change", (nextState) => {
+      if (
+        appState.current.match(/inactive|background|unknown/) &&
+        nextState === "active"
+      ) {
+        setNeedsReAuthentication(true);
+      }
+      appState.current = nextState;
+    });
+
+    LocalAuthentication.isEnrolledAsync().then((data) => {
+      setIsAuthenticationSupported(data);
+    });
+
     fetchUser().catch();
-  }, [fetchUser]);
+
+    return () => {
+      state.remove();
+    };
+  }, [fetchUser, needsReAuthentication]);
+
+  useEffect(() => {
+    if (needsReAuthentication) {
+      if (navigationRef.isReady()) {
+        navigation.navigate("/" as never);
+      }
+    }
+  }, [needsReAuthentication]);
 
   const onLogOut = async () => {
     await deleteToken();
@@ -103,10 +142,28 @@ const CurrentUserProvider: FC<ProviderProps> = ({ children }) => {
     await fetchUser();
   };
 
+  const tryToReauthenticate = async () => {
+    if (!isAuthenticationSupported) {
+      setNeedsReAuthentication(false);
+      return;
+    }
+
+    LocalAuthentication.authenticateAsync().then(
+      (r) => {
+        setNeedsReAuthentication(!r.success);
+      },
+      () => {
+        onLogOut();
+      },
+    );
+  };
+
   const contextData = useMemo(() => {
     return {
       currentUser,
       fetchUser,
+      needsReAuthentication,
+      tryToReauthenticate,
       isPending,
       setIsPending,
       onLogOut,

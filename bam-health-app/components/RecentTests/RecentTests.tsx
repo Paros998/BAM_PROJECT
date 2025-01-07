@@ -5,6 +5,7 @@ import {
   Button,
   Heading,
   HStack,
+  Text,
   VStack,
 } from "@gluestack-ui/themed-native-base";
 import { useFetchData } from "@/hooks/useFetchData";
@@ -36,7 +37,7 @@ const RecentTests: FC<RecentTestsProps> = ({ patientId, ...props }) => {
     return (
       <Box
         rounded="lg"
-        p={1}
+        p={5}
         bg={"indigo.500"}
         w={"90%"}
         justifyContent={"center"}
@@ -45,7 +46,7 @@ const RecentTests: FC<RecentTestsProps> = ({ patientId, ...props }) => {
         borderWidth={1}
         {...props}
       >
-        <Heading mb={1} color="light.50" fontSize={"1xl"}>
+        <Heading mb={1} color="light.50">
           Checking tests history
         </Heading>
         <CenteredSpinner isPending={isPending} />
@@ -65,7 +66,7 @@ const RecentTests: FC<RecentTestsProps> = ({ patientId, ...props }) => {
       borderWidth={1}
       {...props}
     >
-      <Heading mb={2} color="light.50" fontSize={"1xl"}>
+      <Heading mb={2} color="light.50">
         {recentTests?.length === 0 ? `No recent tests taken.` : `My history`}
       </Heading>
 
@@ -75,8 +76,8 @@ const RecentTests: FC<RecentTestsProps> = ({ patientId, ...props }) => {
             <Box key={i} w={"90%"} rounded="sm" p={3} bg={"dark.800"} px={2}>
               <HStack gap={2} justifyContent={"space-between"}>
                 <VStack>
-                  <div>Test {mapTestType(test.type)},</div>
-                  <div>taken on {test.testDate}</div>
+                  <Text>Test {mapTestType(test.type)},</Text>
+                  <Text>taken on {test.testDate}</Text>
                 </VStack>
 
                 <Button rounded={"xl"} colorScheme={"info"} size={"sm"}>

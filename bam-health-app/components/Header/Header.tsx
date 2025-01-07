@@ -22,14 +22,12 @@ const Header: FC<HeaderProps> = ({ username, role, ...props }) => {
 
   return (
     <Box
-      top={"15%"}
       backgroundColor="indigo.500"
       color={"dark"}
       p={2}
       rounded="lg"
       borderColor={"white"}
       borderWidth={1}
-      position={"absolute"}
       justifyContent={"start"}
       w={"90%"}
       {...props}
