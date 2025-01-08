@@ -17,15 +17,12 @@ import Axios from "axios";
 import { UserContextInterface } from "@/interfaces/UserContextInterface";
 import { UserModel } from "@/interfaces/Api";
 import { JwtUser } from "@/interfaces/JwtUser";
-import {
-  createNavigationContainerRef,
-  useNavigation,
-} from "@react-navigation/native";
 import { getRawToken } from "@/utils/getRawToken";
 import * as LocalAuthentication from "expo-local-authentication";
 
 import { deleteToken } from "@/utils/deleteToken";
 import { AppState } from "react-native";
+import { noop } from "@babel/types";
 
 const UserContext = createContext<any>(undefined);
 
@@ -36,11 +33,9 @@ interface ProviderProps {
   children: ReactNode;
 }
 
-const navigationRef = createNavigationContainerRef();
-
 const CurrentUserProvider: FC<ProviderProps> = ({ children }) => {
   const appState = useRef(AppState.currentState);
-  const navigation = useNavigation();
+
   const toast = useToast();
 
   const [currentUser, setCurrentUser] = useState<UserModel>();
@@ -117,9 +112,7 @@ const CurrentUserProvider: FC<ProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (needsReAuthentication) {
-      if (navigationRef.isReady()) {
-        navigation.navigate("/" as never);
-      }
+      fetchUser().then(noop).catch(noop);
     }
   }, [needsReAuthentication]);
 
@@ -136,8 +129,6 @@ const CurrentUserProvider: FC<ProviderProps> = ({ children }) => {
     setCurrentUser(undefined);
 
     delete Axios.defaults.headers.common["Authorization"];
-
-    navigation.navigate("/" as never);
 
     await fetchUser();
   };

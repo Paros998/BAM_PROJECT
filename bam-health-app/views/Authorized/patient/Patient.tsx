@@ -36,6 +36,7 @@ const Patient: FC = () => {
         patientId={currentUser.userId}
         marginTop={5}
         marginBottom={10}
+        marginHorizontal={5}
       />
 
       <RecentTests patientId={currentUser.userId} />

@@ -70,7 +70,13 @@ const AssignedDoctor: FC<AssignedDoctorProps> = ({ patientId, ...props }) => {
           Total experience: {yearsOfExperience}
         </Heading>
 
-        <Button mt={3} colorScheme={"light.50"}>
+        <Button
+          mt={3}
+          colorScheme={"light"}
+          onPress={() => {
+            navigation.navigate("DoctorToAssign" as never);
+          }}
+        >
           Change doctor
         </Button>
       </VStack>

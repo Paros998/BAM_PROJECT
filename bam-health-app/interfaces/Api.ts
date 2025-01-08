@@ -21,6 +21,7 @@ export interface DoctorModel {
   yearsOfExperience: number;
   age: number;
   assignedPatients: number;
+  assignedPatientIds: string[];
 }
 
 export interface AssignedDoctorResponse {
