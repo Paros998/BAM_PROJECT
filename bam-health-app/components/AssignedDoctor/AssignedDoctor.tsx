@@ -4,12 +4,15 @@ import { AssignedDoctorResponse } from "@/interfaces/Api";
 import CenteredSpinner from "@/components/CenteredSpinner/CenteredSpinner";
 import { Box, Button, Heading, VStack } from "@gluestack-ui/themed-native-base";
 import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+import { useNavigation } from "@react-navigation/native";
 
 type AssignedDoctorProps = ViewStyle & {
   patientId: string;
 };
 
 const AssignedDoctor: FC<AssignedDoctorProps> = ({ patientId, ...props }) => {
+  const navigation = useNavigation();
+
   const [response, , isPending] = useFetchData<AssignedDoctorResponse>(
     `/patients/assigned-doctor/${patientId}`,
   );
@@ -32,7 +35,13 @@ const AssignedDoctor: FC<AssignedDoctorProps> = ({ patientId, ...props }) => {
         <VStack alignItems={"center"} justifyContent={"space-around"}>
           <Heading color="dark.800">No doctor is currently assigned.</Heading>
 
-          <Button mt={3} colorScheme={"indigo"}>
+          <Button
+            mt={3}
+            colorScheme={"indigo"}
+            onPress={() => {
+              navigation.navigate("DoctorToAssign" as never);
+            }}
+          >
             Find one
           </Button>
         </VStack>

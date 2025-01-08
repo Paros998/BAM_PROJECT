@@ -2,9 +2,10 @@ import React from "react";
 import { useCurrentUser } from "@/contexts/UserContext";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Doctor from "@/views/Authorized/Doctor";
-import Patient from "@/views/Authorized/Patient";
-import Admin from "@/views/Authorized/Admin";
+import DoctorsForAssignment from "@/views/Authorized/patient/DoctorsForAssignment";
+import Patient from "@/views/Authorized/patient/Patient";
+import Doctor from "@/views/Authorized/doctor/Doctor";
+import Admin from "@/views/Authorized/admin/Admin";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,11 @@ const AuthorizedViews = () => {
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen name="Home" component={Patient} />
+
+          <Stack.Screen
+            name="DoctorToAssign"
+            component={DoctorsForAssignment}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
