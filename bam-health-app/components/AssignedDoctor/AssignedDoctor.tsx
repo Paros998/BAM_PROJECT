@@ -1,21 +1,35 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useFetchData } from "@/hooks/useFetchData";
 import { AssignedDoctorResponse } from "@/interfaces/Api";
 import CenteredSpinner from "@/components/CenteredSpinner/CenteredSpinner";
 import { Box, Button, Heading, VStack } from "@gluestack-ui/themed-native-base";
 import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import { useNavigation } from "@react-navigation/native";
+import { noop } from "@babel/types";
 
 type AssignedDoctorProps = ViewStyle & {
   patientId: string;
 };
 
+type AssignedDoctorRouteParams = {
+  shouldRefetch: boolean;
+};
+
 const AssignedDoctor: FC<AssignedDoctorProps> = ({ patientId, ...props }) => {
   const navigation = useNavigation();
 
-  const [response, , isPending] = useFetchData<AssignedDoctorResponse>(
+  const [response, refetch, isPending] = useFetchData<AssignedDoctorResponse>(
     `/patients/assigned-doctor/${patientId}`,
   );
+
+  const routeParams = navigation.getState()?.routes[0]
+    ?.params as AssignedDoctorRouteParams;
+
+  useEffect(() => {
+    if (routeParams?.shouldRefetch) {
+      refetch().then(noop).catch(noop);
+    }
+  }, [routeParams]);
 
   if (isPending) {
     return <CenteredSpinner isPending={isPending} />;

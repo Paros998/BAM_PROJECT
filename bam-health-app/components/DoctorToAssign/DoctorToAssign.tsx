@@ -51,7 +51,12 @@ const DoctorToAssign: FC<DoctorToAssignProps> = ({ doctor }) => {
         title: "Assigning doctor completed",
       });
 
-      navigate.navigate("Home" as never);
+      navigate.navigate({
+        name: "Home",
+        params: {
+          shouldRefetch: true,
+        },
+      } as never);
     } catch (e: any) {
       toast.show({
         title: "Assigning doctor failed",
