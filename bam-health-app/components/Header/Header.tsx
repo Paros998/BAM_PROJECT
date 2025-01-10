@@ -1,7 +1,8 @@
 import React, { FC, useMemo } from "react";
 import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
-import { Box } from "@gluestack-ui/themed-native-base";
+import { Box, Button, VStack } from "@gluestack-ui/themed-native-base";
 import { UserRole } from "@/interfaces/Api";
+import { useCurrentUser } from "@/contexts/UserContext";
 
 type HeaderProps = ViewStyle & {
   username: string;
@@ -9,6 +10,8 @@ type HeaderProps = ViewStyle & {
 };
 
 const Header: FC<HeaderProps> = ({ username, role, ...props }) => {
+  const { onLogOut } = useCurrentUser();
+
   const welcomeMsg = useMemo<string>(() => {
     switch (role) {
       case "PATIENT":
@@ -32,7 +35,12 @@ const Header: FC<HeaderProps> = ({ username, role, ...props }) => {
       w={"90%"}
       {...props}
     >
-      {welcomeMsg}
+      <VStack alignItems={"center"} justifyContent={"space-around"} gap={2}>
+        {welcomeMsg}
+        <Button variant={"danger"} onPress={() => onLogOut()}>
+          Logout
+        </Button>
+      </VStack>
     </Box>
   );
 };

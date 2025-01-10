@@ -16,7 +16,7 @@ type RecentTestsProps = ViewStyle & {
   patientId: string;
 };
 
-function mapTestType(type: TestType): string {
+export function mapTestType(type: TestType): string {
   switch (type) {
     case "PULSE":
       return "Heart beat (pulse)";

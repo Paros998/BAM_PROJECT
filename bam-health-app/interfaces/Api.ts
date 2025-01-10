@@ -24,6 +24,18 @@ export interface DoctorModel {
   assignedPatientIds: string[];
 }
 
+export interface PatientModel {
+  patientId: string;
+  fullName: string;
+  phoneNumber: string;
+  nationalId: number;
+  age: number;
+}
+
+export interface AssignedPatient extends PatientModel {
+  patientTests: PatientTestResponse[];
+}
+
 export interface AssignedDoctorResponse {
   doctor?: DoctorModel;
 }
