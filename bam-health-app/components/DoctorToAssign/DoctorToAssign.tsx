@@ -54,7 +54,7 @@ const DoctorToAssign: FC<DoctorToAssignProps> = ({ doctor }) => {
       navigate.navigate({
         name: "Home",
         params: {
-          shouldRefetch: true,
+          shouldReFetch: true,
         },
       } as never);
     } catch (e: any) {

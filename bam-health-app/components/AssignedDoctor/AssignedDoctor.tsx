@@ -12,22 +12,23 @@ type AssignedDoctorProps = ViewStyle & {
 };
 
 type AssignedDoctorRouteParams = {
-  shouldRefetch: boolean;
+  shouldReFetch: boolean;
 };
 
 const AssignedDoctor: FC<AssignedDoctorProps> = ({ patientId, ...props }) => {
   const navigation = useNavigation();
 
-  const [response, refetch, isPending] = useFetchData<AssignedDoctorResponse>(
-    `/patients/assigned-doctor/${patientId}`,
-  );
+  const [response, getAssignedDoctor, isPending] =
+    useFetchData<AssignedDoctorResponse>(
+      `/patients/assigned-doctor/${patientId}`,
+    );
 
   const routeParams = navigation.getState()?.routes[0]
     ?.params as AssignedDoctorRouteParams;
 
   useEffect(() => {
-    if (routeParams?.shouldRefetch) {
-      refetch().then(noop).catch(noop);
+    if (routeParams?.shouldReFetch) {
+      getAssignedDoctor().then(noop).catch(noop);
     }
   }, [routeParams]);
 
