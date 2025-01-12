@@ -4,8 +4,10 @@ import { Platform } from "react-native";
 import { useEffect } from "react";
 import { useCurrentUser } from "@/contexts/UserContext";
 
-const webServerUrl = "http://localhost:8080/api/v1/";
-const androidExpoServerUrl = "http://192.168.0.201:8080/api/v1/";
+const base = process.env.EXPO_PUBLIC_SSL_ENABLED ? "https" : "http";
+
+const webServerUrl = `${base}://localhost:8080/api/v1/`;
+const androidExpoServerUrl = `${base}://192.168.0.201:8080/api/v1/`;
 
 axios.defaults.baseURL =
   Platform.OS === "web" ? webServerUrl : androidExpoServerUrl;
