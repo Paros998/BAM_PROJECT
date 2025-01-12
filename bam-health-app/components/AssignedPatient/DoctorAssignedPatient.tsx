@@ -7,6 +7,7 @@ import {
   Text,
   VStack,
 } from "@gluestack-ui/themed-native-base";
+import Test from "@/components/Test/Test";
 
 type AssignedPatientProps = {
   patient: AssignedPatient;
@@ -53,14 +54,18 @@ const DoctorAssignedPatient: FC<AssignedPatientProps> = ({ patient }) => {
             rounded="lg"
             borderColor={"light.50"}
             borderWidth={1}
-            width={"90%"}
+            padding={2}
+            width={"100%"}
           >
             <VStack
+              width={"100%"}
               alignItems={"start"}
               justifyContent={"space-around"}
-              gap={1}
+              gap={2}
             >
-              {/*  TODO add test data*/}
+              {patientTests.map((test, key) => (
+                <Test key={key} test={test} />
+              ))}
             </VStack>
           </Box>
         )}

@@ -1,16 +1,10 @@
 import React, { FC } from "react";
 import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
-import {
-  Box,
-  Button,
-  Heading,
-  HStack,
-  Text,
-  VStack,
-} from "@gluestack-ui/themed-native-base";
+import { Box, Heading, VStack } from "@gluestack-ui/themed-native-base";
 import { useFetchData } from "@/hooks/useFetchData";
 import { PatientTestResponse, TestType } from "@/interfaces/Api";
 import CenteredSpinner from "@/components/CenteredSpinner/CenteredSpinner";
+import Test from "@/components/Test/Test";
 
 type RecentTestsProps = ViewStyle & {
   patientId: string;
@@ -74,16 +68,7 @@ const RecentTests: FC<RecentTestsProps> = ({ patientId, ...props }) => {
         <VStack gap={3} w={"100%"} alignItems={"center"} color="indigo.100">
           {recentTests.map((test, i) => (
             <Box key={i} w={"90%"} rounded="sm" p={3} bg={"dark.800"} px={2}>
-              <HStack gap={2} justifyContent={"space-between"}>
-                <VStack>
-                  <Text>Test {mapTestType(test.type)},</Text>
-                  <Text>taken on {test.testDate}</Text>
-                </VStack>
-
-                <Button rounded={"xl"} colorScheme={"info"} size={"sm"}>
-                  More
-                </Button>
-              </HStack>
+              <Test test={test} />
             </Box>
           ))}
         </VStack>
