@@ -18,7 +18,7 @@ const LoginForm = () => {
   }, [errors]);
 
   return (
-    <View w={"full"} alignItems={"center"}>
+    <View w={"full"} height={"full"} alignItems={"center"}>
       <VStack
         mt={3}
         backgroundColor="indigo.700"

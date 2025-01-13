@@ -31,8 +31,10 @@ const Header: FC<HeaderProps> = ({ username, role, ...props }) => {
       rounded="lg"
       borderColor={"white"}
       borderWidth={1}
-      justifyContent={"start"}
+      alignItems={"center"}
+      justifyContent={"center"}
       w={"90%"}
+      margin={"auto"}
       {...props}
     >
       <VStack alignItems={"center"} justifyContent={"space-around"} gap={2}>

@@ -27,6 +27,7 @@ const DoctorAssignedPatient: FC<AssignedPatientProps> = ({ patient }) => {
       borderColor={"light.50"}
       borderWidth={1}
       width={"90%"}
+      marginBottom={5}
     >
       <VStack alignItems={"start"} justifyContent={"space-around"} gap={1}>
         <Text>Patient: {fullName}</Text>
@@ -43,6 +44,7 @@ const DoctorAssignedPatient: FC<AssignedPatientProps> = ({ patient }) => {
           <Button
             size={"sm"}
             variant={"link"}
+            colorScheme={"amber"}
             onPress={() => setDropdownOpen(!isDropdownOpen)}
           >
             {isDropdownOpen ? "Hide" : "Check more"}
@@ -54,14 +56,14 @@ const DoctorAssignedPatient: FC<AssignedPatientProps> = ({ patient }) => {
             rounded="lg"
             borderColor={"light.50"}
             borderWidth={1}
-            padding={2}
+            padding={1}
             width={"100%"}
           >
             <VStack
               width={"100%"}
               alignItems={"start"}
               justifyContent={"space-around"}
-              gap={2}
+              gap={5}
             >
               {patientTests.map((test, key) => (
                 <Test key={key} test={test} />

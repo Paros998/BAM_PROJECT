@@ -7,7 +7,7 @@ const img = require("@/assets/images/favicon.png");
 const Logo: FC<ViewStyle> = (props) => {
   return (
     <Box {...props}>
-      <HStack alignItems={"center"}>
+      <HStack alignItems={"center"} justifyContent={"center"}>
         <Image source={img} alt="logo" w="12" h="12" />
 
         <Text color="dark.50" ml={2} fontSize={"2xl"}>

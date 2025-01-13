@@ -5,6 +5,7 @@ import Logo from "@/components/Logo/Logo";
 import {
   Box,
   Button,
+  ScrollView,
   Text,
   View,
   VStack,
@@ -33,18 +34,17 @@ const DoctorsForAssignment = () => {
 
   if (areDoctorsFetching) {
     return (
-      <View
+      <ScrollView
         height={"full"}
+        width="full"
         pt={2}
-        w="full"
         backgroundColor="dark.800"
         alignItems="center"
-        justifyContent="flex-start"
       >
         <Logo marginBottom={10} />
 
         <CenteredSpinner isPending={areDoctorsFetching} />
-      </View>
+      </ScrollView>
     );
   }
 
@@ -56,7 +56,6 @@ const DoctorsForAssignment = () => {
         w="full"
         backgroundColor="dark.800"
         alignItems="center"
-        justifyContent="flex-start"
       >
         <Logo marginBottom={10} />
 

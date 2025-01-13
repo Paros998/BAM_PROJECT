@@ -5,7 +5,7 @@ import CenteredSpinner from "@/components/CenteredSpinner/CenteredSpinner";
 import AssignedDoctor from "@/components/AssignedDoctor/AssignedDoctor";
 import Header from "@/components/Header/Header";
 import RecentTests from "@/components/RecentTests/RecentTests";
-import { View } from "@gluestack-ui/themed-native-base";
+import { ScrollView } from "@gluestack-ui/themed-native-base";
 
 const Patient: FC = () => {
   const { currentUser, isPending, onClearUser } = useCurrentUser();
@@ -20,13 +20,13 @@ const Patient: FC = () => {
   }
 
   return (
-    <View
+    <ScrollView
       height={"full"}
       pt={2}
       w="full"
       backgroundColor="dark.800"
+      display="flex"
       alignItems="center"
-      justifyContent="flex-start"
     >
       <Logo marginBottom={10} />
 
@@ -40,7 +40,7 @@ const Patient: FC = () => {
       />
 
       <RecentTests patientId={currentUser.userId} />
-    </View>
+    </ScrollView>
   );
 };
 

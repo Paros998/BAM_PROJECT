@@ -5,7 +5,7 @@ import { useFetchData } from "@/hooks/useFetchData";
 import { AssignedPatient } from "@/interfaces/Api";
 import Logo from "@/components/Logo/Logo";
 import Header from "@/components/Header/Header";
-import { Heading, View, VStack } from "@gluestack-ui/themed-native-base";
+import { Heading, ScrollView, VStack } from "@gluestack-ui/themed-native-base";
 import DoctorAssignedPatient from "@/components/AssignedPatient/DoctorAssignedPatient";
 
 const Doctor: FC = () => {
@@ -26,31 +26,31 @@ const Doctor: FC = () => {
 
   if (isPendingAssignedPatients || !assignedPatients) {
     return (
-      <View
+      <ScrollView
         height={"full"}
         pt={2}
         w="full"
+        display="flex"
         backgroundColor="dark.800"
         alignItems="center"
-        justifyContent="flex-start"
       >
         <Logo marginBottom={10} />
 
         <Header username={currentUser.username} role={currentUser.role} />
 
         <CenteredSpinner isPending={isPending} />
-      </View>
+      </ScrollView>
     );
   }
 
   return (
-    <View
+    <ScrollView
       height={"full"}
       pt={2}
       w="full"
+      display="flex"
       backgroundColor="dark.800"
       alignItems="center"
-      justifyContent="flex-start"
     >
       <Logo marginBottom={10} />
 
@@ -69,6 +69,7 @@ const Doctor: FC = () => {
           justifyContent={"space-around"}
           gap={1}
           width={"90%"}
+          mx={"auto"}
         >
           <Heading mb={1} color="light.50">
             Assigned patients
@@ -79,7 +80,7 @@ const Doctor: FC = () => {
           ))}
         </VStack>
       )}
-    </View>
+    </ScrollView>
   );
 };
 

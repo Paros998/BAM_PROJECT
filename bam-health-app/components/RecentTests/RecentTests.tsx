@@ -34,6 +34,7 @@ const RecentTests: FC<RecentTestsProps> = ({ patientId, ...props }) => {
         p={5}
         bg={"indigo.500"}
         w={"90%"}
+        margin={"auto"}
         justifyContent={"center"}
         alignItems={"center"}
         borderColor={"white"}
@@ -54,6 +55,8 @@ const RecentTests: FC<RecentTestsProps> = ({ patientId, ...props }) => {
       p={1}
       bg={"indigo.500"}
       w={"90%"}
+      margin={"auto"}
+      marginBottom={10}
       justifyContent={"center"}
       alignItems={"center"}
       borderColor={"white"}

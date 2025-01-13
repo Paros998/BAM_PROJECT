@@ -1,6 +1,11 @@
 import { UserCredentials } from "@/interfaces/Api";
 import { FC } from "react";
-import { Heading, useToast, View } from "@gluestack-ui/themed-native-base";
+import {
+  Box,
+  Heading,
+  ScrollView,
+  useToast,
+} from "@gluestack-ui/themed-native-base";
 import { useCurrentUser } from "@/contexts/UserContext";
 import axios from "axios";
 import { putToken } from "@/utils/putToken";
@@ -50,27 +55,30 @@ const Login: FC = () => {
   };
 
   return (
-    <View
-      height={"full"}
-      w="full"
+    <ScrollView
       backgroundColor="dark.800"
-      alignItems="center"
+      display="flex"
+      flexDirection={"column"}
+      height={"100%"}
+      width={"100%"}
       justifyContent="center"
     >
-      <Logo marginBottom={10} />
+      <Box>
+        <Logo marginBottom={10} />
 
-      <Heading mt={"1/6"} mb={1} color="light.50" fontSize={"2xl"}>
-        LogIn
-      </Heading>
+        <Heading w={"5/6"} mx={"auto"} mb={1} color="light.50" fontSize={"2xl"}>
+          LogIn
+        </Heading>
 
-      <Formik<UserCredentials>
-        initialValues={formikValues}
-        onSubmit={handleLogin}
-        validationSchema={validationSchema}
-      >
-        <LoginForm />
-      </Formik>
-    </View>
+        <Formik<UserCredentials>
+          initialValues={formikValues}
+          onSubmit={handleLogin}
+          validationSchema={validationSchema}
+        >
+          <LoginForm />
+        </Formik>
+      </Box>
+    </ScrollView>
   );
 };
 

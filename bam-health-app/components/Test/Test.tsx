@@ -11,6 +11,7 @@ import {
 import Axios from "axios";
 import { mapTestType } from "@/components/RecentTests/RecentTests";
 import { Modal, TextInput } from "react-native";
+import Logo from "@/components/Logo/Logo";
 
 type TestProps = {
   test: PatientTestResponse;
@@ -65,7 +66,7 @@ const Test: FC<TestProps> = ({ test }) => {
   }
 
   return (
-    <Box width={"100%"}>
+    <Box width={"100%"} backgroundColor={"dark.700"} padding={2}>
       <Text>Test: {mapTestType(type)}</Text>
       <Text>Date: {testDate}</Text>
 
@@ -131,6 +132,8 @@ const Test: FC<TestProps> = ({ test }) => {
 
           <Button
             size={"xs"}
+            marginTop={3}
+            colorScheme={"rose"}
             onPress={() => {
               setNoteToUpdate(noteDisplay ?? "");
               setModalVisible(!modalVisible);
@@ -153,8 +156,10 @@ const Test: FC<TestProps> = ({ test }) => {
               gap={5}
               height={"100%"}
               width={"100%"}
-              backgroundColor={"grey"}
+              backgroundColor={"#252728"}
             >
+              <Logo />
+
               <Text>
                 Note: <br />
               </Text>
