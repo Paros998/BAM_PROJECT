@@ -97,13 +97,37 @@ const Test: FC<TestProps> = ({ test }) => {
         </VStack>
       )}
 
-      {currentUser?.role !== "DOCTOR" && (
-        <Text mt={2}>Note from doctor: {noteDisplay ?? "Not added"}</Text>
+      {currentUser?.role === "PATIENT" && (
+        <div>
+          <Text mt={2}>
+            {noteDisplay
+              ? `Note from doctor: ${noteDisplay}`
+              : "Note from doctor not added"}
+          </Text>
+        </div>
       )}
 
       {currentUser?.role === "DOCTOR" && (
         <VStack>
-          <Text mt={2}>Note : {noteDisplay ?? "Not added"}</Text>
+          {!noteDisplay ?? <Text mt={2}>Not added</Text>}
+
+          {noteDisplay ?? (
+            <TextInput
+              multiline
+              editable={false}
+              maxLength={300}
+              value={noteToUpdate}
+              style={{
+                color: "dark",
+                backgroundColor: "white",
+                padding: "2%",
+                width: "90%",
+                height: "20%",
+                borderRadius: "5px",
+              }}
+              placeholder="Note to patient... "
+            />
+          )}
 
           <Button
             size={"xs"}
@@ -146,6 +170,7 @@ const Test: FC<TestProps> = ({ test }) => {
                   backgroundColor: "white",
                   padding: "2%",
                   width: "90%",
+                  height: "20%",
                   borderRadius: "5px",
                 }}
                 placeholder="Note to patient... "
