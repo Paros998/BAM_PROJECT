@@ -10,7 +10,7 @@ import {
 } from "@gluestack-ui/themed-native-base";
 import Axios from "axios";
 import { mapTestType } from "@/components/RecentTests/RecentTests";
-import { Modal } from "react-native";
+import { Modal, TextInput } from "react-native";
 
 type TestProps = {
   test: PatientTestResponse;
@@ -21,6 +21,7 @@ const Test: FC<TestProps> = ({ test }) => {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [noteToView, setNoteToView] = useState<string | null>(null);
+  const [noteToUpdate, setNoteToUpdate] = useState<string>("");
   const toast = useToast();
 
   const {
@@ -45,13 +46,14 @@ const Test: FC<TestProps> = ({ test }) => {
       await Axios.put(`/patient-tests/${id}`, { newNote: newNote });
 
       toast.show({
-        title: "Updating note successfully",
+        title: "Updated note successfully",
       });
 
       setNoteToView(newNote);
+      setModalVisible(!modalVisible);
     } catch (e: any) {
       toast.show({
-        title: "Updating note failed",
+        title: "Updated note failed",
       });
     } finally {
       setIsUpdating(false);
@@ -103,7 +105,13 @@ const Test: FC<TestProps> = ({ test }) => {
         <VStack>
           <Text mt={2}>Note : {noteDisplay ?? "Not added"}</Text>
 
-          <Button size={"xs"} onPress={() => setModalVisible(!modalVisible)}>
+          <Button
+            size={"xs"}
+            onPress={() => {
+              setNoteToUpdate(noteDisplay ?? "");
+              setModalVisible(!modalVisible);
+            }}
+          >
             {noteDisplay ? "Edit note" : "Add note"}
           </Button>
 
@@ -117,19 +125,45 @@ const Test: FC<TestProps> = ({ test }) => {
           >
             <VStack
               alignItems="center"
-              justifyContent="space-around"
-              spacing={2}
+              justifyContent="center"
+              gap={5}
               height={"100%"}
               width={"100%"}
               backgroundColor={"grey"}
             >
               <Text>
                 Note: <br />
-                {noteDisplay}
               </Text>
 
-              <Button onPress={() => setModalVisible(!modalVisible)}>
-                Hide Modal
+              <TextInput
+                onChangeText={setNoteToUpdate}
+                multiline
+                editable
+                maxLength={300}
+                value={noteToUpdate}
+                style={{
+                  color: "dark",
+                  backgroundColor: "white",
+                  padding: "2%",
+                  width: "90%",
+                  borderRadius: "5px",
+                }}
+                placeholder="Note to patient... "
+              />
+
+              <Button
+                disabled={isUpdating}
+                colorScheme={"indigo"}
+                onPress={() => updateNote(noteToUpdate)}
+              >
+                Update note
+              </Button>
+
+              <Button
+                disabled={isUpdating}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                Discard
               </Button>
             </VStack>
           </Modal>
