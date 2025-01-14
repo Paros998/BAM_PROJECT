@@ -5,10 +5,12 @@ import CenteredSpinner from "@/components/CenteredSpinner/CenteredSpinner";
 import AssignedDoctor from "@/components/AssignedDoctor/AssignedDoctor";
 import Header from "@/components/Header/Header";
 import RecentTests from "@/components/RecentTests/RecentTests";
-import { ScrollView } from "@gluestack-ui/themed-native-base";
+import { Button, ScrollView } from "@gluestack-ui/themed-native-base";
+import { useNavigation } from "@react-navigation/native";
 
 const Patient: FC = () => {
   const { currentUser, isPending, onClearUser } = useCurrentUser();
+  const navigation = useNavigation();
 
   if (!currentUser && isPending) {
     return <CenteredSpinner isPending={isPending} />;
@@ -35,9 +37,22 @@ const Patient: FC = () => {
       <AssignedDoctor
         patientId={currentUser.userId}
         marginTop={10}
-        marginBottom={10}
         marginHorizontal={5}
       />
+
+      <Button
+        marginBottom={10}
+        marginHorizontal={5}
+        borderColor={"white"}
+        borderWidth={1}
+        colorScheme={"indigo"}
+        fontSize={"2xl"}
+        onPress={() => {
+          navigation.navigate("TestManagement" as never);
+        }}
+      >
+        Manage Tests
+      </Button>
 
       <RecentTests patientId={currentUser.userId} />
     </ScrollView>

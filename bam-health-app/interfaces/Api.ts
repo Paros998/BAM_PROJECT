@@ -58,3 +58,20 @@ export interface BloodPressure {
   bloodPressureTo: number;
   testOrder: number;
 }
+
+export interface TestRequest {
+  patientId: string;
+  dateOfTes?: string;
+}
+
+export interface AddPulseTestRequest extends TestRequest {
+  beatsPerMinute: number[];
+}
+
+export interface AddDiabetesTestRequest extends TestRequest {
+  diabetesLevelCases: number[];
+}
+
+export interface AddBloodPressureTestRequest extends TestRequest {
+  bloodPressuresCases: BloodPressure[];
+}

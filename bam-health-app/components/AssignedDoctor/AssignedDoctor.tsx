@@ -45,10 +45,11 @@ const AssignedDoctor: FC<AssignedDoctorProps> = ({ patientId, ...props }) => {
         rounded="lg"
         borderColor={"indigo"}
         borderWidth={1}
+        color="light.50"
         {...props}
       >
         <VStack alignItems={"center"} justifyContent={"space-around"}>
-          <Heading color="dark.800">No doctor is currently assigned.</Heading>
+          <Heading>No doctor is currently assigned.</Heading>
 
           <Button
             mt={3}
@@ -73,21 +74,23 @@ const AssignedDoctor: FC<AssignedDoctorProps> = ({ patientId, ...props }) => {
       rounded="lg"
       borderColor={"light.50"}
       borderWidth={1}
+      color="light.50"
       {...props}
     >
       <VStack alignItems={"center"} justifyContent={"space-around"}>
-        <Heading mb={1} color="dark.800">
+        <Heading mb={1}>
           Assigned doctor is {fullName} who specializes in {specialization},{" "}
           {age} years old.
         </Heading>
 
-        <Heading mb={1} color="dark.800">
+        <Heading mb={1}>
           Total experience: {yearsOfExperience}
+          {yearsOfExperience === 1 ? "yr" : "yrs"}
         </Heading>
 
         <Button
           mt={3}
-          colorScheme={"light"}
+          colorScheme={"rose"}
           onPress={() => {
             navigation.navigate("DoctorToAssign" as never);
           }}

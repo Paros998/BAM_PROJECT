@@ -5,6 +5,7 @@ import DoctorsForAssignment from "@/views/Authorized/patient/DoctorsForAssignmen
 import Patient from "@/views/Authorized/patient/Patient";
 import Doctor from "@/views/Authorized/doctor/Doctor";
 import Admin from "@/views/Authorized/admin/Admin";
+import TestManagement from "@/views/Authorized/patient/TestManagement";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,8 @@ const AuthorizedViews = () => {
         <Stack.Screen name="Home" component={Patient} />
 
         <Stack.Screen name="DoctorToAssign" component={DoctorsForAssignment} />
+
+        <Stack.Screen name="TestManagement" component={TestManagement} />
       </Stack.Navigator>
     );
   }

@@ -84,6 +84,7 @@ const DoctorToAssign: FC<DoctorToAssignProps> = ({ doctor }) => {
 
         <Heading mb={1} color="light.50">
           Total experience: {yearsOfExperience}
+          {yearsOfExperience === 1 ? "yr" : "yrs"}
         </Heading>
 
         <Button

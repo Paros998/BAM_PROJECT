@@ -156,7 +156,7 @@ const Test: FC<TestProps> = ({ test }) => {
               gap={5}
               height={"100%"}
               width={"100%"}
-              backgroundColor={"#252728"}
+              backgroundColor="dark.800"
             >
               <Logo />
 

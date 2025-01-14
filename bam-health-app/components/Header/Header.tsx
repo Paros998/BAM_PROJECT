@@ -26,7 +26,7 @@ const Header: FC<HeaderProps> = ({ username, role, ...props }) => {
   return (
     <Box
       backgroundColor="indigo.500"
-      color={"dark"}
+      color="light.50"
       p={2}
       rounded="lg"
       borderColor={"white"}

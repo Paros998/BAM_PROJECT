@@ -7,7 +7,6 @@ import {
   Button,
   ScrollView,
   Text,
-  View,
   VStack,
 } from "@gluestack-ui/themed-native-base";
 import { useCurrentUser } from "@/contexts/UserContext";
@@ -50,7 +49,7 @@ const DoctorsForAssignment = () => {
 
   if (!doctors || doctors.length === 0) {
     return (
-      <View
+      <ScrollView
         height={"full"}
         pt={2}
         w="full"
@@ -70,7 +69,7 @@ const DoctorsForAssignment = () => {
         >
           Go Back
         </Button>
-      </View>
+      </ScrollView>
     );
   }
 
@@ -92,15 +91,6 @@ const DoctorsForAssignment = () => {
 
         <Box mt={5}>
           <VStack>
-            {doctors.map((doctor, key) => (
-              <DoctorToAssign key={key} doctor={doctor} />
-            ))}{" "}
-            {doctors.map((doctor, key) => (
-              <DoctorToAssign key={key} doctor={doctor} />
-            ))}{" "}
-            {doctors.map((doctor, key) => (
-              <DoctorToAssign key={key} doctor={doctor} />
-            ))}{" "}
             {doctors.map((doctor, key) => (
               <DoctorToAssign key={key} doctor={doctor} />
             ))}
