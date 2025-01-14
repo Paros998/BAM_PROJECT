@@ -69,7 +69,7 @@ const DoctorToAssign: FC<DoctorToAssignProps> = ({ doctor }) => {
   return (
     <Box
       mb={10}
-      mx={2}
+      mx={5}
       backgroundColor="indigo.500"
       p={2}
       rounded="lg"
@@ -89,7 +89,7 @@ const DoctorToAssign: FC<DoctorToAssignProps> = ({ doctor }) => {
         <Button
           mt={3}
           disabled={isAlreadyAssigned || isPending}
-          colorScheme={isAlreadyAssigned || isPending ? "dark" : "primary"}
+          colorScheme={isAlreadyAssigned || isPending ? "trueGray" : "primary"}
           onPress={() => assignDoctor(doctorId)}
         >
           Assign Doctor

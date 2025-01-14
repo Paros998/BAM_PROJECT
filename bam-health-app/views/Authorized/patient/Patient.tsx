@@ -34,7 +34,7 @@ const Patient: FC = () => {
 
       <AssignedDoctor
         patientId={currentUser.userId}
-        marginTop={5}
+        marginTop={10}
         marginBottom={10}
         marginHorizontal={5}
       />

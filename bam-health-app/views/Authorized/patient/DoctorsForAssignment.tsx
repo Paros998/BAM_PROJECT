@@ -75,36 +75,50 @@ const DoctorsForAssignment = () => {
   }
 
   return (
-    <View
-      height={"full"}
-      pt={2}
-      w="full"
-      backgroundColor="dark.800"
-      alignItems="center"
-      justifyContent="flex-start"
-    >
-      <Logo marginBottom={10} />
+    <>
+      <ScrollView
+        height={"full"}
+        pt={2}
+        w="full"
+        backgroundColor="dark.800"
+        alignItems="center"
+        justifyContent="flex-start"
+      >
+        <Logo marginBottom={10} />
 
-      <Text fontSize={"2xl"}>Available doctors</Text>
+        <Text mx={"auto"} fontSize={"2xl"}>
+          Available doctors
+        </Text>
 
-      <Box mt={5}>
-        <VStack>
-          {doctors.map((doctor, key) => (
-            <DoctorToAssign key={key} doctor={doctor} />
-          ))}
-        </VStack>
-      </Box>
-
+        <Box mt={5}>
+          <VStack>
+            {doctors.map((doctor, key) => (
+              <DoctorToAssign key={key} doctor={doctor} />
+            ))}{" "}
+            {doctors.map((doctor, key) => (
+              <DoctorToAssign key={key} doctor={doctor} />
+            ))}{" "}
+            {doctors.map((doctor, key) => (
+              <DoctorToAssign key={key} doctor={doctor} />
+            ))}{" "}
+            {doctors.map((doctor, key) => (
+              <DoctorToAssign key={key} doctor={doctor} />
+            ))}
+          </VStack>
+        </Box>
+      </ScrollView>
       <Button
-        mt={4}
-        colorScheme={"light"}
+        position={"sticky"}
+        w={"100%"}
+        bottom={0}
+        colorScheme={"info"}
         onPress={() => {
           navigation.navigate("Home" as never);
         }}
       >
         Go Back
       </Button>
-    </View>
+    </>
   );
 };
 

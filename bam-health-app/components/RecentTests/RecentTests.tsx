@@ -22,7 +22,7 @@ export function mapTestType(type: TestType): string {
 }
 
 const RecentTests: FC<RecentTestsProps> = ({ patientId, ...props }) => {
-  const limit = 7;
+  const limit = 15;
   const [recentTests, , isPending] = useFetchData<PatientTestResponse[]>(
     `patient-tests/${patientId}/recent/${limit}`,
   );
