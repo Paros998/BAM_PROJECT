@@ -90,10 +90,10 @@ const DoctorToAssign: FC<DoctorToAssignProps> = ({ doctor }) => {
         <Button
           mt={3}
           disabled={isAlreadyAssigned || isPending}
-          colorScheme={isAlreadyAssigned || isPending ? "trueGray" : "primary"}
+          colorScheme={isAlreadyAssigned || isPending ? "success" : "primary"}
           onPress={() => assignDoctor(doctorId)}
         >
-          Assign Doctor
+          {isAlreadyAssigned ? "Already Assigned Doctor" : "Assign Doctor"}
         </Button>
 
         <CenteredSpinner marginTop={2} isPending={isPending} />
