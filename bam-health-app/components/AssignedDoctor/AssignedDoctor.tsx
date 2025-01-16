@@ -40,7 +40,7 @@ const AssignedDoctor: FC<AssignedDoctorProps> = ({ patientId, ...props }) => {
     return (
       <Box
         mb={10}
-        backgroundColor="light.50"
+        backgroundColor="indigo.500"
         p={2}
         rounded="lg"
         borderColor={"indigo"}
