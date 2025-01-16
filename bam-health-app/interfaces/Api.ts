@@ -61,7 +61,7 @@ export interface BloodPressure {
 
 export interface TestRequest {
   patientId: string;
-  dateOfTes?: string;
+  dateOfTest?: string;
 }
 
 export interface AddPulseTestRequest extends TestRequest {

@@ -19,6 +19,63 @@ import {
 import { Modal } from "react-native";
 import { mapTestType } from "@/components/RecentTests/RecentTests";
 import Axios from "axios";
+import { Formik } from "formik";
+import PulseTestForm from "@/forms/NewTest/PulseTestForm";
+import DiabetesTestForm from "@/forms/NewTest/DiabetesTestForm";
+import BloodPressureTestForm from "@/forms/NewTest/BloodPressureTestForm";
+import * as Yup from "yup";
+
+const addPulseTestRequestInitialValues: AddPulseTestRequest = {
+  beatsPerMinute: [1, 1, 1],
+  patientId: "",
+};
+
+const addPulseTestRequestValidationSchema = Yup.object().shape({
+  beatsPerMinute: Yup.array().of(
+    Yup.number()
+      .min(0, "Heartbeat cannot be lower than 0")
+      .max(250, "Heartbeat cannot be higher than 250")
+      .required("Heartbeat level is required"),
+  ),
+});
+
+const addDiabetesTestRequestInitialValues: AddDiabetesTestRequest = {
+  diabetesLevelCases: [1, 1, 1],
+  patientId: "",
+};
+
+const addDiabetesTestRequestValidationSchema = Yup.object().shape({
+  diabetesLevelCases: Yup.array().of(
+    Yup.number()
+      .min(0, "Sugar level cannot be lower than 0")
+      .max(250, "Sugar level cannot be higher than 250")
+      .required("Sugar level is required"),
+  ),
+});
+
+const addBloodPressureTestRequestInitialValues: AddBloodPressureTestRequest = {
+  bloodPressuresCases: [
+    { bloodPressureTo: 0, bloodPressureOn: 0, testOrder: 1 },
+    { bloodPressureTo: 0, bloodPressureOn: 0, testOrder: 2 },
+    { bloodPressureTo: 0, bloodPressureOn: 0, testOrder: 3 },
+  ],
+  patientId: "",
+};
+
+const addBloodPressureTestValidationSchema = Yup.object().shape({
+  bloodPressuresCases: Yup.array().of(
+    Yup.object().shape({
+      bloodPressureTo: Yup.number()
+        .min(0, "Pressure level cannot be lower than 0")
+        .max(250, "Pressure level cannot be higher than 250")
+        .required("Pressure level is required"),
+      bloodPressureOn: Yup.number()
+        .min(0, "Pressure level cannot be lower than 0")
+        .max(250, "Pressure level cannot be higher than 250")
+        .required("Pressure level is required"),
+    }),
+  ),
+});
 
 const TestManagement = () => {
   const { currentUser, isPending, onClearUser } = useCurrentUser();
@@ -51,6 +108,7 @@ const TestManagement = () => {
       | AddBloodPressureTestRequest,
   ) => {
     setIsSubmitting(true);
+    testData.patientId = currentUser?.userId as string;
     try {
       await Axios.post(`/patient-tests/${endpoint}`, testData);
 
@@ -158,12 +216,48 @@ const TestManagement = () => {
         >
           <Logo />
 
-          <VStack alignItems="center" justifyContent={"center"} gap={5}>
+          <VStack
+            alignItems="center"
+            justifyContent={"center"}
+            gap={5}
+            padding={2}
+            borderRadius={10}
+            backgroundColor="indigo.500"
+            w={"90%"}
+          >
             <Text color="light.50" fontSize={"2xl"}>
               {mapTestType(testType as TestType)}
             </Text>
 
-            {/*TODO forms*/}
+            {testType === "PULSE" && (
+              <Formik
+                initialValues={addPulseTestRequestInitialValues}
+                validationSchema={addPulseTestRequestValidationSchema}
+                onSubmit={onSubmit}
+              >
+                <PulseTestForm />
+              </Formik>
+            )}
+
+            {testType === "DIABETES" && (
+              <Formik
+                initialValues={addDiabetesTestRequestInitialValues}
+                validationSchema={addDiabetesTestRequestValidationSchema}
+                onSubmit={onSubmit}
+              >
+                <DiabetesTestForm />
+              </Formik>
+            )}
+
+            {testType === "BLOOD_PRESSURE" && (
+              <Formik
+                initialValues={addBloodPressureTestRequestInitialValues}
+                validationSchema={addBloodPressureTestValidationSchema}
+                onSubmit={onSubmit}
+              >
+                <BloodPressureTestForm />
+              </Formik>
+            )}
           </VStack>
 
           <Button disabled={isSubmitting} onPress={() => setTestType(null)}>
