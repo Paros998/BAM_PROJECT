@@ -1,10 +1,12 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import { Box, Heading, VStack } from "@gluestack-ui/themed-native-base";
 import { useFetchData } from "@/hooks/useFetchData";
 import { PatientTestResponse, TestType } from "@/interfaces/Api";
 import CenteredSpinner from "@/components/CenteredSpinner/CenteredSpinner";
 import Test from "@/components/Test/Test";
+import { noop } from "@babel/types";
+import { useNavigation } from "@react-navigation/native";
 
 type RecentTestsProps = ViewStyle & {
   patientId: string;
@@ -21,11 +23,25 @@ export function mapTestType(type: TestType): string {
   }
 }
 
+type RecentTestsRouteParams = {
+  shouldReFetchTestTaken: boolean;
+};
+
 const RecentTests: FC<RecentTestsProps> = ({ patientId, ...props }) => {
   const limit = 15;
-  const [recentTests, , isPending] = useFetchData<PatientTestResponse[]>(
-    `patient-tests/${patientId}/recent/${limit}`,
-  );
+  const navigation = useNavigation();
+  const [recentTests, fetchTestsTaken, isPending] = useFetchData<
+    PatientTestResponse[]
+  >(`patient-tests/${patientId}/recent/${limit}`);
+
+  const routeParams = navigation.getState()?.routes[0]
+    ?.params as RecentTestsRouteParams;
+
+  useEffect(() => {
+    if (routeParams?.shouldReFetchTestTaken) {
+      fetchTestsTaken().then(noop).catch(noop);
+    }
+  }, [routeParams]);
 
   if (isPending) {
     return (

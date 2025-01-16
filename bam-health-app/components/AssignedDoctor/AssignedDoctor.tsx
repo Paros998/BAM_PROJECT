@@ -12,7 +12,7 @@ type AssignedDoctorProps = ViewStyle & {
 };
 
 type AssignedDoctorRouteParams = {
-  shouldReFetch: boolean;
+  shouldReFetchDoctor: boolean;
 };
 
 const AssignedDoctor: FC<AssignedDoctorProps> = ({ patientId, ...props }) => {
@@ -27,7 +27,7 @@ const AssignedDoctor: FC<AssignedDoctorProps> = ({ patientId, ...props }) => {
     ?.params as AssignedDoctorRouteParams;
 
   useEffect(() => {
-    if (routeParams?.shouldReFetch) {
+    if (routeParams?.shouldReFetchDoctor) {
       getAssignedDoctor().then(noop).catch(noop);
     }
   }, [routeParams]);

@@ -80,6 +80,7 @@ const addBloodPressureTestValidationSchema = Yup.object().shape({
 const TestManagement = () => {
   const { currentUser, isPending, onClearUser } = useCurrentUser();
   const toast = useToast();
+  const [isTestAdded, setIsTestAdded] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [testType, setTestType] = useState<TestType | null>(null);
@@ -116,6 +117,7 @@ const TestManagement = () => {
         title: "Test added successfully.",
       });
 
+      setIsTestAdded(true);
       setTestType(null);
     } catch (e: any) {
       toast.show({
@@ -191,7 +193,16 @@ const TestManagement = () => {
         <Button
           colorScheme={"light"}
           onPress={() => {
-            navigation.navigate("Home" as never);
+            if (isTestAdded) {
+              navigation.navigate({
+                name: "Home",
+                params: {
+                  shouldReFetchTestTaken: true,
+                },
+              } as never);
+            } else {
+              navigation.navigate("Home" as never);
+            }
           }}
         >
           Go Back
