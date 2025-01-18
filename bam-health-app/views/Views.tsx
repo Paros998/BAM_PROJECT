@@ -16,7 +16,10 @@ const Views = () => {
 
   useEffect(() => {
     const checkOverlayPermission = async () => {
-      if (Platform.OS === "android") {
+      if (
+        process.env.EXPO_PUBLIC_ANTI_TAPJACKING_ENABLED &&
+        Platform.OS === "android"
+      ) {
         return await PermissionsAndroid.check(
           PermissionsAndroid.PERMISSIONS.SYSTEM_ALERT_WINDOW,
         );
