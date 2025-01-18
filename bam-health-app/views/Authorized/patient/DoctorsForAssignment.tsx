@@ -38,7 +38,10 @@ const DoctorsForAssignment = () => {
         width="full"
         pt={2}
         backgroundColor="dark.800"
-        alignItems="center"
+        contentContainerStyle={{
+          alignItems: "center",
+          justifyContent: "flex-start",
+        }}
       >
         <Logo marginBottom={10} />
 
@@ -54,7 +57,10 @@ const DoctorsForAssignment = () => {
         pt={2}
         w="full"
         backgroundColor="dark.800"
-        alignItems="center"
+        contentContainerStyle={{
+          alignItems: "center",
+          justifyContent: "flex-start",
+        }}
       >
         <Logo marginBottom={10} />
 
@@ -80,8 +86,10 @@ const DoctorsForAssignment = () => {
         pt={2}
         w="full"
         backgroundColor="dark.800"
-        alignItems="center"
-        justifyContent="flex-start"
+        contentContainerStyle={{
+          alignItems: "center",
+          justifyContent: "flex-start",
+        }}
       >
         <Logo marginBottom={10} />
 

@@ -32,7 +32,9 @@ const Doctor: FC = () => {
         w="full"
         display="flex"
         backgroundColor="dark.800"
-        alignItems="center"
+        contentContainerStyle={{
+          alignItems: "center",
+        }}
       >
         <Logo marginBottom={10} />
 
@@ -50,7 +52,9 @@ const Doctor: FC = () => {
       w="full"
       display="flex"
       backgroundColor="dark.800"
-      alignItems="center"
+      contentContainerStyle={{
+        alignItems: "center",
+      }}
     >
       <Logo marginBottom={10} />
 

@@ -56,12 +56,14 @@ const Login: FC = () => {
 
   return (
     <ScrollView
+      contentContainerStyle={{
+        justifyContent: "flex-center",
+      }}
       backgroundColor="dark.800"
       display="flex"
       flexDirection={"column"}
       height={"100%"}
       width={"100%"}
-      justifyContent="center"
     >
       <Box>
         <Logo marginBottom={10} />

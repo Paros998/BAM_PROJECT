@@ -12,6 +12,7 @@ import Axios from "axios";
 import { mapTestType } from "@/components/RecentTests/RecentTests";
 import { Modal, TextInput } from "react-native";
 import Logo from "@/components/Logo/Logo";
+import { BR, Div } from "@expo/html-elements";
 
 type TestProps = {
   test: PatientTestResponse;
@@ -99,13 +100,13 @@ const Test: FC<TestProps> = ({ test }) => {
       )}
 
       {currentUser?.role === "PATIENT" && (
-        <div>
+        <Div>
           <Text mt={2}>
             {noteDisplay
               ? `Note from doctor: ${noteDisplay}`
               : "Note from doctor not added"}
           </Text>
-        </div>
+        </Div>
       )}
 
       {currentUser?.role === "DOCTOR" && (
@@ -124,7 +125,7 @@ const Test: FC<TestProps> = ({ test }) => {
                 padding: "2%",
                 width: "90%",
                 height: "20%",
-                borderRadius: "5px",
+                borderRadius: 5,
               }}
               placeholder="Note to patient... "
             />
@@ -161,7 +162,7 @@ const Test: FC<TestProps> = ({ test }) => {
               <Logo />
 
               <Text>
-                Note: <br />
+                Note: <BR />
               </Text>
 
               <TextInput
@@ -176,7 +177,7 @@ const Test: FC<TestProps> = ({ test }) => {
                   padding: "2%",
                   width: "90%",
                   height: "20%",
-                  borderRadius: "5px",
+                  borderRadius: 5,
                 }}
                 placeholder="Note to patient... "
               />

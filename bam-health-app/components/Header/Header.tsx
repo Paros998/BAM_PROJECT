@@ -1,6 +1,6 @@
 import React, { FC, useMemo } from "react";
 import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
-import { Box, Button, VStack } from "@gluestack-ui/themed-native-base";
+import { Box, Button, Text, VStack } from "@gluestack-ui/themed-native-base";
 import { UserRole } from "@/interfaces/Api";
 import { useCurrentUser } from "@/contexts/UserContext";
 
@@ -38,7 +38,7 @@ const Header: FC<HeaderProps> = ({ username, role, ...props }) => {
       {...props}
     >
       <VStack alignItems={"center"} justifyContent={"space-around"} gap={2}>
-        {welcomeMsg}
+        <Text>{welcomeMsg}</Text>
         <Button variant={"danger"} onPress={() => onLogOut()}>
           Logout
         </Button>

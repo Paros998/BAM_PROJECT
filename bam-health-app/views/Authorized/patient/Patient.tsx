@@ -23,12 +23,12 @@ const Patient: FC = () => {
 
   return (
     <ScrollView
+      contentContainerStyle={{ alignItems: "center" }}
       height={"full"}
       pt={2}
       w="full"
       backgroundColor="dark.800"
       display="flex"
-      alignItems="center"
     >
       <Logo marginBottom={10} />
 
