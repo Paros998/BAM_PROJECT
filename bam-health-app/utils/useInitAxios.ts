@@ -4,7 +4,7 @@ import { Platform } from "react-native";
 import { useEffect } from "react";
 import { useCurrentUser } from "@/contexts/UserContext";
 
-const base = process.env.EXPO_PUBLIC_SSL_ENABLED ? "https" : "http";
+const base = process.env.EXPO_PUBLIC_SSL_ENABLED === "true" ? "https" : "http";
 
 const webServerUrl = `${base}://localhost:8080/api/v1/`;
 const androidExpoServerUrl = `${base}://192.168.0.201:8080/api/v1/`;
