@@ -1,29 +1,19 @@
-import React, { useEffect, useMemo, useState } from "react";
-import {
-  Button,
-  Text,
-  useToast,
-  View,
-  VStack,
-} from "@gluestack-ui/themed-native-base";
+import React, {useEffect, useMemo, useState} from "react";
+import {Button, Text, useToast, View, VStack,} from "@gluestack-ui/themed-native-base";
 import Logo from "@/components/Logo/Logo";
-import { useCurrentUser } from "@/contexts/UserContext";
+import {useCurrentUser} from "@/contexts/UserContext";
 import CenteredSpinner from "@/components/CenteredSpinner/CenteredSpinner";
-import { useNavigation } from "@react-navigation/native";
-import {
-  AddBloodPressureTestRequest,
-  AddDiabetesTestRequest,
-  AddPulseTestRequest,
-  TestType,
-} from "@/interfaces/Api";
-import { Modal } from "react-native";
-import { mapTestType } from "@/components/RecentTests/RecentTests";
+import {useNavigation} from "@react-navigation/native";
+import {AddBloodPressureTestRequest, AddDiabetesTestRequest, AddPulseTestRequest, TestType,} from "@/interfaces/Api";
+import {Modal, Platform} from "react-native";
+import {mapTestType} from "@/components/RecentTests/RecentTests";
 import Axios from "axios";
-import { Formik } from "formik";
+import {Formik} from "formik";
 import PulseTestForm from "@/forms/NewTest/PulseTestForm";
 import DiabetesTestForm from "@/forms/NewTest/DiabetesTestForm";
 import BloodPressureTestForm from "@/forms/NewTest/BloodPressureTestForm";
 import * as Yup from "yup";
+import * as ScreenCapture from "expo-screen-capture";
 
 const addPulseTestRequestInitialValues: AddPulseTestRequest = {
   beatsPerMinute: [1, 1, 1],
@@ -32,10 +22,10 @@ const addPulseTestRequestInitialValues: AddPulseTestRequest = {
 
 const addPulseTestRequestValidationSchema = Yup.object().shape({
   beatsPerMinute: Yup.array().of(
-    Yup.number()
-      .min(0, "Heartbeat cannot be lower than 0")
-      .max(250, "Heartbeat cannot be higher than 250")
-      .required("Heartbeat level is required"),
+      Yup.number()
+          .min(0, "Heartbeat cannot be lower than 0")
+          .max(250, "Heartbeat cannot be higher than 250")
+          .required("Heartbeat level is required"),
   ),
 });
 
@@ -46,45 +36,63 @@ const addDiabetesTestRequestInitialValues: AddDiabetesTestRequest = {
 
 const addDiabetesTestRequestValidationSchema = Yup.object().shape({
   diabetesLevelCases: Yup.array().of(
-    Yup.number()
-      .min(0, "Sugar level cannot be lower than 0")
-      .max(250, "Sugar level cannot be higher than 250")
-      .required("Sugar level is required"),
+      Yup.number()
+          .min(0, "Sugar level cannot be lower than 0")
+          .max(250, "Sugar level cannot be higher than 250")
+          .required("Sugar level is required"),
   ),
 });
 
 const addBloodPressureTestRequestInitialValues: AddBloodPressureTestRequest = {
   bloodPressuresCases: [
-    { bloodPressureTo: 0, bloodPressureOn: 0, testOrder: 1 },
-    { bloodPressureTo: 0, bloodPressureOn: 0, testOrder: 2 },
-    { bloodPressureTo: 0, bloodPressureOn: 0, testOrder: 3 },
+    {bloodPressureTo: 0, bloodPressureOn: 0, testOrder: 1},
+    {bloodPressureTo: 0, bloodPressureOn: 0, testOrder: 2},
+    {bloodPressureTo: 0, bloodPressureOn: 0, testOrder: 3},
   ],
   patientId: "",
 };
 
 const addBloodPressureTestValidationSchema = Yup.object().shape({
   bloodPressuresCases: Yup.array().of(
-    Yup.object().shape({
-      bloodPressureTo: Yup.number()
-        .min(0, "Pressure level cannot be lower than 0")
-        .max(250, "Pressure level cannot be higher than 250")
-        .required("Pressure level is required"),
-      bloodPressureOn: Yup.number()
-        .min(0, "Pressure level cannot be lower than 0")
-        .max(250, "Pressure level cannot be higher than 250")
-        .required("Pressure level is required"),
-    }),
+      Yup.object().shape({
+        bloodPressureTo: Yup.number()
+            .min(0, "Pressure level cannot be lower than 0")
+            .max(250, "Pressure level cannot be higher than 250")
+            .required("Pressure level is required"),
+        bloodPressureOn: Yup.number()
+            .min(0, "Pressure level cannot be lower than 0")
+            .max(250, "Pressure level cannot be higher than 250")
+            .required("Pressure level is required"),
+      }),
   ),
 });
 
 const TestManagement = () => {
-  const { currentUser, isPending, onClearUser } = useCurrentUser();
+  const {currentUser, isPending, onClearUser} = useCurrentUser();
   const toast = useToast();
   const [isTestAdded, setIsTestAdded] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [testType, setTestType] = useState<TestType | null>(null);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    if (
+        process.env.EXPO_PUBLIC_ANTI_TAPJACKING_ENABLED === "true" &&
+        Platform.OS === "android"
+    ) {
+      ScreenCapture.preventScreenCaptureAsync();
+    }
+
+    return () => {
+      if (
+          process.env.EXPO_PUBLIC_ANTI_TAPJACKING_ENABLED === "true" &&
+          Platform.OS === "android"
+      ) {
+        ScreenCapture.allowScreenCaptureAsync();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (testType === null) {
@@ -103,10 +111,10 @@ const TestManagement = () => {
   }, [testType]);
 
   const onSubmit = async (
-    testData:
-      | AddPulseTestRequest
-      | AddDiabetesTestRequest
-      | AddBloodPressureTestRequest,
+      testData:
+          | AddPulseTestRequest
+          | AddDiabetesTestRequest
+          | AddBloodPressureTestRequest,
   ) => {
     setIsSubmitting(true);
     testData.patientId = currentUser?.userId as string;
@@ -129,7 +137,7 @@ const TestManagement = () => {
   };
 
   if (!currentUser && isPending) {
-    return <CenteredSpinner isPending={isPending} />;
+    return <CenteredSpinner isPending={isPending}/>;
   }
 
   if (!currentUser) {
@@ -138,145 +146,145 @@ const TestManagement = () => {
   }
 
   return (
-    <>
-      <View
-        height={"full"}
-        pt={2}
-        w="full"
-        backgroundColor="dark.800"
-        alignItems="center"
-        justifyContent={"space-around"}
-      >
-        <Logo marginBottom={10} />
-
-        <VStack
-          padding={10}
-          borderColor={"white"}
-          borderWidth={1}
-          borderRadius={5}
-          backgroundColor="indigo.500"
-          alignItems="center"
-          justifyContent={"center"}
-          gap={5}
+      <>
+        <View
+            height={"full"}
+            pt={2}
+            w="full"
+            backgroundColor="dark.800"
+            alignItems="center"
+            justifyContent={"space-around"}
         >
-          <Button
-            borderColor={"white"}
-            borderWidth={1}
-            colorScheme={"primary"}
-            fontSize={"2xl"}
-            onPress={() => setTestType("DIABETES")}
-          >
-            New diabetes (blood sugar) test
-          </Button>
-
-          <Button
-            borderColor={"white"}
-            borderWidth={1}
-            colorScheme={"emerald"}
-            fontSize={"2xl"}
-            onPress={() => setTestType("PULSE")}
-          >
-            New pulse (heartbeat) test
-          </Button>
-
-          <Button
-            borderColor={"white"}
-            borderWidth={1}
-            colorScheme={"dark"}
-            fontSize={"2xl"}
-            onPress={() => setTestType("BLOOD_PRESSURE")}
-          >
-            New blood pressure test
-          </Button>
-        </VStack>
-
-        <Button
-          colorScheme={"light"}
-          onPress={() => {
-            if (isTestAdded) {
-              navigation.navigate({
-                name: "Home",
-                params: {
-                  shouldReFetchTestTaken: true,
-                },
-              } as never);
-            } else {
-              navigation.navigate("Home" as never);
-            }
-          }}
-        >
-          Go Back
-        </Button>
-      </View>
-
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={isModalVisible}
-        onRequestClose={() => {
-          setIsModalVisible(!isModalVisible);
-        }}
-      >
-        <VStack
-          alignItems="center"
-          justifyContent={"space-around"}
-          gap={5}
-          height={"100%"}
-          width={"100%"}
-          backgroundColor="dark.800"
-        >
-          <Logo />
+          <Logo marginBottom={10}/>
 
           <VStack
-            alignItems="center"
-            justifyContent={"center"}
-            gap={5}
-            padding={2}
-            borderRadius={10}
-            backgroundColor="indigo.500"
-            w={"90%"}
+              padding={10}
+              borderColor={"white"}
+              borderWidth={1}
+              borderRadius={5}
+              backgroundColor="indigo.500"
+              alignItems="center"
+              justifyContent={"center"}
+              gap={5}
           >
-            <Text color="light.50" fontSize={"2xl"}>
-              {mapTestType(testType as TestType)}
-            </Text>
+            <Button
+                borderColor={"white"}
+                borderWidth={1}
+                colorScheme={"primary"}
+                fontSize={"2xl"}
+                onPress={() => setTestType("DIABETES")}
+            >
+              New diabetes (blood sugar) test
+            </Button>
 
-            {testType === "PULSE" && (
-              <Formik
-                initialValues={addPulseTestRequestInitialValues}
-                validationSchema={addPulseTestRequestValidationSchema}
-                onSubmit={onSubmit}
-              >
-                <PulseTestForm />
-              </Formik>
-            )}
+            <Button
+                borderColor={"white"}
+                borderWidth={1}
+                colorScheme={"emerald"}
+                fontSize={"2xl"}
+                onPress={() => setTestType("PULSE")}
+            >
+              New pulse (heartbeat) test
+            </Button>
 
-            {testType === "DIABETES" && (
-              <Formik
-                initialValues={addDiabetesTestRequestInitialValues}
-                validationSchema={addDiabetesTestRequestValidationSchema}
-                onSubmit={onSubmit}
-              >
-                <DiabetesTestForm />
-              </Formik>
-            )}
-
-            {testType === "BLOOD_PRESSURE" && (
-              <Formik
-                initialValues={addBloodPressureTestRequestInitialValues}
-                validationSchema={addBloodPressureTestValidationSchema}
-                onSubmit={onSubmit}
-              >
-                <BloodPressureTestForm />
-              </Formik>
-            )}
+            <Button
+                borderColor={"white"}
+                borderWidth={1}
+                colorScheme={"dark"}
+                fontSize={"2xl"}
+                onPress={() => setTestType("BLOOD_PRESSURE")}
+            >
+              New blood pressure test
+            </Button>
           </VStack>
 
-          <Button disabled={isSubmitting} onPress={() => setTestType(null)}>
-            Discard
+          <Button
+              colorScheme={"light"}
+              onPress={() => {
+                if (isTestAdded) {
+                  navigation.navigate({
+                    name: "Home",
+                    params: {
+                      shouldReFetchTestTaken: true,
+                    },
+                  } as never);
+                } else {
+                  navigation.navigate("Home" as never);
+                }
+              }}
+          >
+            Go Back
           </Button>
-        </VStack>
-      </Modal>
-    </>
+        </View>
+
+        <Modal
+            animationType="slide"
+            transparent={false}
+            visible={isModalVisible}
+            onRequestClose={() => {
+              setIsModalVisible(!isModalVisible);
+            }}
+        >
+          <VStack
+              alignItems="center"
+              justifyContent={"space-around"}
+              gap={5}
+              height={"100%"}
+              width={"100%"}
+              backgroundColor="dark.800"
+          >
+            <Logo/>
+
+            <VStack
+                alignItems="center"
+                justifyContent={"center"}
+                gap={5}
+                padding={2}
+                borderRadius={10}
+                backgroundColor="indigo.500"
+                w={"90%"}
+            >
+              <Text color="light.50" fontSize={"2xl"}>
+                {mapTestType(testType as TestType)}
+              </Text>
+
+              {testType === "PULSE" && (
+                  <Formik
+                      initialValues={addPulseTestRequestInitialValues}
+                      validationSchema={addPulseTestRequestValidationSchema}
+                      onSubmit={onSubmit}
+                  >
+                    <PulseTestForm/>
+                  </Formik>
+              )}
+
+              {testType === "DIABETES" && (
+                  <Formik
+                      initialValues={addDiabetesTestRequestInitialValues}
+                      validationSchema={addDiabetesTestRequestValidationSchema}
+                      onSubmit={onSubmit}
+                  >
+                    <DiabetesTestForm/>
+                  </Formik>
+              )}
+
+              {testType === "BLOOD_PRESSURE" && (
+                  <Formik
+                      initialValues={addBloodPressureTestRequestInitialValues}
+                      validationSchema={addBloodPressureTestValidationSchema}
+                      onSubmit={onSubmit}
+                  >
+                    <BloodPressureTestForm/>
+                  </Formik>
+              )}
+            </VStack>
+
+            <Button disabled={isSubmitting} onPress={() => setTestType(null)}>
+              Discard
+            </Button>
+          </VStack>
+        </Modal>
+      </>
   );
 };
 
